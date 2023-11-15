@@ -17,6 +17,11 @@ jobs:
     env:
       EPF_LICENSE_KEY: ${{ secrets.EPF_LICENSE_KEY }}
     steps:
+      - name: install git (test-reporter dependency)
+        run: |
+          apt-get update && apt-get install -y software-properties-common && \
+          add-apt-repository -y ppa:git-core/ppa && \
+          apt-get install -y git
       - name: checkout
         uses: actions/checkout@v3
       - name: license epf
@@ -30,8 +35,6 @@ jobs:
         with:
           name: check-tutorial-sut-results
           path: Demo.suite/Results
-      - name: install test-reporter dependencies
-        run: apt-get update && apt-get install -y git
       - name: test report
         uses: dorny/test-reporter@v1
         if: always()
