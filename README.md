@@ -1,7 +1,7 @@
 # Container Images for Eggplant Functional
 
 This repository contains Dockerfiles which will build container images
-containing Eggplant Functional, as well as an example set of GitHub Actions demonstrating how the container can be build and then used to run an Eggplant Functional script.
+containing Eggplant Functional, as well as an example set of GitHub Actions demonstrating how the container can be built and then used to run an Eggplant Functional script.
 
 The Dockerfiles allow you to create images for both Linux flavors of Eggplant
 Functional: RedHat (using CentOS 7 as the base image) and Ubuntu (using Ubuntu 16.04
@@ -21,15 +21,15 @@ To provide a license key, run the following command:
 runscript -CommandLineOutput yes -LicenseKey 0123-4567-89ab-cdef-012
 ```
 
-To run a Eggplant Functional script, run the following command:
+To run an Eggplant Functional script, run the following command:
 You will need to map a volume if you want to use a local suite
 
 ```
-runscript  -CommandLineOutput yes ./{your-suite}.suite/Scripts/{your-script}.script
+runscript -CommandLineOutput yes ./{your-suite}.suite/Scripts/{your-script}.script
 ```
 
 To start Eggdrive, run the following command, be sure you expose the driveport you are choosing:
 
 ```
-runscript  -driveport 5400 -CommandLineOutput yes
+runscript -driveport 5400 -CommandLineOutput yes
 ```
