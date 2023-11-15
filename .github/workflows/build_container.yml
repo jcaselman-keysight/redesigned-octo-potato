@@ -21,4 +21,4 @@ jobs:
           context: .
           file: dockerfiles/ubuntu/Dockerfile
           push: true
-          tags: ${{ secrets.REGISTRY_PREFIX }}${{ github.event.repository.name}}:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.REGISTRY_PREFIX }}${{ github.event.repository.name}}:${{ github.sha }}
