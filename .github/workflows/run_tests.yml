@@ -14,9 +14,13 @@ jobs:
       credentials:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    env:
+      EPF_LICENSE_KEY: ${{ secrets.EPF_LICENSE_KEY }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
+      - name: license epf
+        run: runscript -LicenseKey $EPF_LICENSE_KEY
       - name: run-tests
         run: |
           runscript -CommandLineOutput YES Demo.suite/Scripts/check_tutorial_sut.script
@@ -26,6 +30,8 @@ jobs:
         with:
           name: check-tutorial-sut-results
           path: Demo.suite/Results
+      - name: install test-reporter dependencies
+        run: apt-get update && apt-get install -y git
       - name: test report
         uses: dorny/test-reporter@v1
         if: always()
