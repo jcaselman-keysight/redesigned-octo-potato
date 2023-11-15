@@ -8,6 +8,8 @@ on:
 jobs:
   run-tests:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      checks: write
     runs-on: ubuntu-latest
     container:
       image: ${{ vars.DOCKER_REGISTRY }}/${{ vars.REGISTRY_PREFIX }}/${{ github.event.repository.name}}:${{ github.sha }}
