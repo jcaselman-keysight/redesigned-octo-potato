@@ -1,0 +1,31 @@
+﻿Connect "tutorialSut"
+CaptureScreen "initial"
+
+BeginTestCase "Find text"
+
+repeat for each ["contacts", "favorites", "history", "downloads"]
+	assert ImageFound(text:it)	
+end repeat
+
+EndTestCase "Find text"
+
+
+BeginTestCase "Read text"
+
+BeginTestCase "Check Favorites"
+Click text:"Favorites"
+CaptureScreen "favorites"
+
+assert ReadText(RemoteScreenRectangle()) contains "Still not a real phone"
+EndTestCase "Check Favorites"
+
+BeginTestCase "Check Downloads"
+Click text:"downloads"
+CaptureScreen "downloads"
+
+assert ReadText(RemoteScreenRectangle()) contains "The phone is a lie"
+EndTestCase "Check Downloads"
+
+EndTestCase "Read text"
+
+Disconnect

@@ -2,7 +2,7 @@ name: run-tests
 on:
   workflow_run:
     workflows:
-        - build-and-publish-ubuntu-container
+      - build-and-publish-ubuntu-container
     types:
       - completed
 jobs:
@@ -10,10 +10,26 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     container:
-        image: ${{ vars.DOCKER_REGISTRY }}/${{ vars.REGISTRY_PREFIX }}/${{ github.event.repository.name}}:${{ github.sha }}
-        credentials:
-            username: ${{ secrets.DOCKER_USER }}
-            password: ${{ secrets.DOCKER_PASSWORD }}
+      image: ${{ vars.DOCKER_REGISTRY }}/${{ vars.REGISTRY_PREFIX }}/${{ github.event.repository.name}}:${{ github.sha }}
+      credentials:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
+      - name: run-tests
+        run: |
+          runscript -CommandLineOutput YES Demo.suite/Scripts/check_tutorial_sut.script
+        shell: bash
+      - name: upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: check-tutorial-sut-results
+          path: Demo.suite/Results
+      - name: test report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: check_tutorial_sut script results
+          path: Demo.suite/**/LogFile.xml
+          reporter: java-junit
