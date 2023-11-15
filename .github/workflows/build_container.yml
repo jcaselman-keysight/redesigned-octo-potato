@@ -1,6 +1,5 @@
 name: build-and-publish-ubuntu-container
-on:
-  push
+on: push
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
