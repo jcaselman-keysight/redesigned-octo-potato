@@ -1,8 +1,6 @@
 name: build-and-publish-ubuntu-container
 on:
   push
-env:
-  IMAGE_NAME: ${{ github.repository }}
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -12,7 +10,7 @@ jobs:
       - name: docker login
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
-          registry: ${{ secrets.DOCKER_REGISTRY }}
+          registry: ${{ vars.DOCKER_REGISTRY }}
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: build and push image to registry
@@ -21,4 +19,4 @@ jobs:
           context: .
           file: dockerfiles/ubuntu/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.REGISTRY_PREFIX }}${{ github.event.repository.name}}:${{ github.sha }}
+          tags: ${{ vars.DOCKER_REGISTRY }}/${{ vars.REGISTRY_PREFIX }}/${{ github.event.repository.name}}:${{ github.sha }}

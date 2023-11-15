@@ -9,7 +9,11 @@ jobs:
   run-tests:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    container: ""
+    container:
+        image: ${{ vars.DOCKER_REGISTRY }}/${{ vars.REGISTRY_PREFIX }}/${{ github.event.repository.name}}:${{ github.sha }}
+        credentials:
+            username: ${{ secrets.DOCKER_USER }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       - name: checkout
         uses: actions/checkout@v4
